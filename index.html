@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>This is Rock Paper Scissors game</h1>
-    <p>Open your console to play the game</p>
+    <main>
+        <div class="game">
+            <h1>Rock Paper Scissors game by Theta</h1>
+            <div class="round-teller">
+                <ul type="none" class="rectangle-container">
+                    <li class="rectangle"></li>
+                    <li class="rectangle"></li>
+                    <li class="rectangle"></li>
+                    <li class="rectangle"></li>
+                    <li class="rectangle"></li>
+                </ul>
+                <p class="notification"><span>Current round: </span><span class="notification-update">0</span></p>
+                <p class="instruction"><span>Step: </span><span class="instruction-update"></span></p>
+                <p class="human-choice"><span>Your choice is: </span><span class="human-choice-update"></span></p>
+                <p class="computer-choice"><span>Computer's choice: </span><span class="computer-choice-update"></span></p>
+                <p class="result"><span>Result: </span><span class="result-update"></span></p>
+            </div>
+            <div class="user-selection-container">
+                <ul type="none" class="selection-container">
+                    <li class="selection">
+                        <label for="rock"><img class="selection-img" src="images/Rock.jpg" class="rock"></label>
+                        <input type="radio" name="selection-radio" value="rock" id="rock" class="radio" disabled>
+                    </li>
+                    <li class="selection">
+                        <label for="paper"><img class="selection-img" src="images/Paper.jpg" class="paper"></label>
+                        <input type="radio" name="selection-radio" value="paper" id="paper" class="radio" disabled>
+                        </li>
+                    <li class="selection">
+                        <label for="scissors"><img class="selection-img" src="images/Scissors.jpg" class="scissors"></label>
+                        <input type="radio" name="selection-radio" value="scissors" id="scissors" class="radio" disabled>
+                </ul>
+            </div>
+            <div class="control">
+                <button class="start-game control-btn">Start game</button>
+                <button class="confirm-selection control-btn" disabled>Confirm</button>
+                <button class="continue control-btn" disabled>Next round</button>
+                <button class="restart control-btn" disabled>Restart</button>
+            </div>
+        </div>
+    </main>
     <script src="main.js"></script>
 </body>
 </html>

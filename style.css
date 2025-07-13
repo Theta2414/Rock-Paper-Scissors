@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.round-teller {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+    position: relative;
+}
+
+.rectangle-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+
+.rectangle {
+    height: 20px;
+    width: 20px;
+    border: 2px solid black;
+    border-radius: 3px;
+}
+
+.selection-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.selection {
+    max-width: 250px;
+    flex: 1 0 150px;
+    cursor: pointer;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+}
+
+label {
+    cursor: pointer;
+}
+
+.selection-img {
+    height: 100%;
+    width: 100%;
+}
+
+.radio {
+    display: none;
+}
+
+.control {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.control-btn {
+    height: 50px;
+    width: 100px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.start-game {
+    background-color: #06ff06;
+}
+
+.confirm-selection {
+    background-color: #067000;
+}
+
+.restart {
+    background-color: #ff0000;
+}
