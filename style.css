@@ -24,6 +24,7 @@ h1 {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 20px;
+    height: 20px;
 }
 
 .rectangle {
