@@ -158,7 +158,7 @@ function confirm () {
     } else {
         continueBtn.disabled = false;
     };
-    label.forEach(item => item.style.border = "2px solid #2c3e50");
+    label.forEach(item => item.removeAttribute("style"));
 };
 
 function restart () {
@@ -177,7 +177,7 @@ function restart () {
     confirmBtn.disabled = true;
     continueBtn.disabled = true;
     restartBtn.disabled = true;
-    label.forEach(item => item.style.border = "2px solid #2c3e50");
+    label.forEach(item => item.removeAttribute("style"));
     if (point.length !== 0) {
         point.forEach(item => {
             item.style.border = "2px solid #677bab";
