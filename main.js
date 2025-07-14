@@ -97,6 +97,8 @@ function startNextRound () {
         instructionU.textContent = "Waiting for player's choice";
         currentRectangle = point[roundCount - 1];
         currentRectangle.style.border = "5px solid black"; //Set new style for new round
+        humanChoiceU.textContent = "";
+        computerChoiceU.textContent = "";
     } else {
         //the final round
         currentRectangle.style.border = "2px solid black";        
@@ -113,11 +115,12 @@ function startNextRound () {
 //Update labels base on human's choice and computer's choice
 function confirm () {
     const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
-    const computerChoice = getComputerChoice()
+    const computerChoice = getComputerChoice();
     computerChoiceU.textContent = computerChoice;
     const result = checkResult(humanChoice, computerChoice);
     confirmBtn.disabled = true;
     selections.forEach(item => item.disabled = true);
+    instructionU.textContent = "Click next ground";
     switch (result) {
         case "Computer wins":
             if (roundCount !== roundNumber) resultU.textContent = "Computer wins";
@@ -136,6 +139,7 @@ function confirm () {
     };
     if (roundCount === roundNumber) {
         continueBtn.disabled = true;
+        point.forEach(item => item.style.border = "5px solid black");
         if (humanScore > computerScore) {
             instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Human wins";
@@ -181,8 +185,8 @@ function restart () {
 startBtn.addEventListener("click", () => {
     pointField.textContent = "";
     while (!(1 <= roundNumber && roundNumber <= 15)) {
-        roundNumber = prompt("How many round do you want to play? (1 - 15) enter Stop to break");
-        if (roundNumber === "Stop") {
+        roundNumber = prompt("How many rounds do you want to play? (1 - 15) enter 'stop' to cancel");
+        if (roundNumber === "stop") {
             break;
         };
     };
