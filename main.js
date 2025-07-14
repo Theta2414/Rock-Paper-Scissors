@@ -32,9 +32,10 @@ selections.forEach(item => item.addEventListener("click", (event) => {
     confirmBtn.disabled = false;
     const humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
     label.forEach(item => {
-        item.style.border = "2px solid #111820ff";
-        humanChoiceLabel.style.border = "2px solid white";
+        item.removeAttribute("style"); //Remove current style     
     });
+    humanChoiceLabel.style.border = "2px solid white"; //Add new style
+    humanChoiceLabel.style.backgroundColor = "#1a2f43";
 }));
 
 // Get a random choice: rock, paper or scissors for computer
