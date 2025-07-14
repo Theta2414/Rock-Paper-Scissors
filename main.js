@@ -183,18 +183,20 @@ startBtn.addEventListener("click", () => {
     while (!(1 <= roundNumber && roundNumber <= 15)) {
         roundNumber = prompt("How many round do you want to play? (1 - 15) enter Stop to break");
         if (roundNumber === "Stop") {
-            restart ();
             break;
-        } else {
-            roundNumber = +roundNumber;
-            for (let i = 1; i <= roundNumber; i++) {
-                const createRectangle = document.createElement("div");
-                createRectangle.classList.add("rectangle");
-                pointField.appendChild(createRectangle);
-            };
-            point = document.querySelectorAll(".rectangle");
-            startNextRound ();
         };
+    };
+    if (1 <= roundNumber && roundNumber <= 15) {
+        roundNumber = +roundNumber;
+        for (let i = 1; i <= roundNumber; i++) {
+            const createRectangle = document.createElement("div");
+            createRectangle.classList.add("rectangle");
+            pointField.appendChild(createRectangle);
+        };
+        point = document.querySelectorAll(".rectangle");
+        startNextRound ();
+    } else {
+        instructionU.textContent = "Click start game to play";
     };
 });
 
