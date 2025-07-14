@@ -10,9 +10,9 @@
     <main>
         <div class="game">
             <h1>Rock Paper Scissors game by Theta</h1>
-            <div class="round-teller">
-                <ul type="none" class="rectangle-container">
-                </ul>
+            <ul type="none" class="rectangle-container">
+            </ul>
+            <div class="round-teller">               
                 <p class="notification"><span>Current round: </span><span class="notification-update"></span></p>
                 <p class="instruction"><span>Step: </span><span class="instruction-update">Click start game to play</span></p>
                 <p class="human-choice"><span>Your choice is: </span><span class="human-choice-update"></span></p>
@@ -22,16 +22,17 @@
             <div class="user-selection-container">
                 <ul type="none" class="selection-container">
                     <li class="selection">
-                        <label for="rock"><img class="selection-img" src="images/Rock.jpg" class="rock"></label>
                         <input type="radio" name="selection-radio" value="rock" id="rock" class="radio" disabled>
+                        <label for="rock">🪨</label>      
                     </li>
-                    <li class="selection">
-                        <label for="paper"><img class="selection-img" src="images/Paper.jpg" class="paper"></label>
+                    <li class="selection">                       
                         <input type="radio" name="selection-radio" value="paper" id="paper" class="radio" disabled>
-                        </li>
-                    <li class="selection">
-                        <label for="scissors"><img class="selection-img" src="images/Scissors.jpg" class="scissors"></label>
+                        <label for="paper">📃</label>
+                    </li>
+                    <li class="selection">                       
                         <input type="radio" name="selection-radio" value="scissors" id="scissors" class="radio" disabled>
+                        <label for="scissors">✂️</label>
+                    </li>
                 </ul>
             </div>
             <div class="control">

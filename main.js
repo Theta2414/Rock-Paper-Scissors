@@ -9,12 +9,13 @@ const humanChoiceU = document.querySelector(".human-choice-update");
 const computerChoiceU = document.querySelector(".computer-choice-update");
 const resultU = document.querySelector(".result-update");
 const selections = document.querySelectorAll(".radio");
+const label = document.querySelectorAll("label");
 let roundCount = 0;
 let humanScore = 0;
 let computerScore = 0;
-let currentRectangle;
+let currentRectangle = null;
 let roundNumber = null;
-let point;
+let point = null;
 //Just in case
 // const  = document.querySelector("");
 // const  = document.querySelector("");
@@ -26,19 +27,24 @@ let point;
 
 selections.forEach(item => item.addEventListener("click", (event) => {
     const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
-    humanChoiceU.textContent = humanChoice;
+    humanChoiceU.textContent = humanChoice.at(0).toUpperCase() + humanChoice.slice(1);
     instructionU.textContent = "Confirm your choice";
     confirmBtn.disabled = false;
+    const humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
+    label.forEach(item => {
+        item.style.border = "2px solid #2c3e50";
+        humanChoiceLabel.style.border = "2px solid white";
+    });
 }));
 
 // Get a random choice: rock, paper or scissors for computer
-function getComputerChoice() {
+function getComputerChoice () {
     let randomNumber = Math.random();
     return (randomNumber < 1/3) ? "rock" : (randomNumber < 2/3) ? "paper" : "scissors"; 
 };
 
 //Return the result (win, draw, lose) of human's and computer's choice
-function checkResult(humanChoice, computerChoice) {
+function checkResult (humanChoice, computerChoice) {
     let result;
     if (humanChoice === "rock") {
         switch (computerChoice) {
@@ -51,7 +57,7 @@ function checkResult(humanChoice, computerChoice) {
             case "scissors":
                 result = "Human wins";
                 break;
-        }
+        };
     } else if (humanChoice === "paper") {
         switch (computerChoice) {
             case "rock":
@@ -63,7 +69,7 @@ function checkResult(humanChoice, computerChoice) {
             case "scissors":
                 result = "Computer wins";
                 break;
-        }
+        };
     } else {
         switch (computerChoice) {
             case "rock":
@@ -75,8 +81,8 @@ function checkResult(humanChoice, computerChoice) {
             case "scissors":
                 result = "Draw";
                 break;
-        }
-    }
+        };
+    };
     return result;
 };
 
@@ -89,20 +95,17 @@ function startNextRound () {
         instructionU.textContent = "Waiting for player's choice"; 
         currentRectangle = point[roundCount - 1];
         currentRectangle.style.border = "5px solid black";
-    } else if (0 < roundCount && roundCount < roundNumber) {
+    } else {
         //from second round
         currentRectangle.style.border = "2px solid black"; //Delete previous round cache
         roundCount++;
         currentRoundU.textContent =  roundCount;
         instructionU.textContent = "Waiting for player's choice";
         currentRectangle = point[roundCount - 1];
-        currentRectangle.style.border = "5px solid black"; //Set new style for new round
+        currentRectangle.style.border = "5px solid black"; //Highlight current round
         humanChoiceU.textContent = "";
         computerChoiceU.textContent = "";
-    } else {
-        //the final round
-        currentRectangle.style.border = "2px solid black";        
-    }
+    };
     startBtn.disabled = true;
     restartBtn.disabled = false;
     continueBtn.disabled = true;
@@ -115,8 +118,8 @@ function startNextRound () {
 //Update labels base on human's choice and computer's choice
 function confirm () {
     const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
-    const computerChoice = getComputerChoice();
-    computerChoiceU.textContent = computerChoice;
+    const computerChoice = getComputerChoice ();
+    computerChoiceU.textContent = computerChoice.at(0).toUpperCase() + computerChoice.slice(1);
     const result = checkResult(humanChoice, computerChoice);
     confirmBtn.disabled = true;
     selections.forEach(item => item.disabled = true);
@@ -124,17 +127,17 @@ function confirm () {
     switch (result) {
         case "Computer wins":
             if (roundCount !== roundNumber) resultU.textContent = "Computer wins";
-            currentRectangle.style.backgroundColor = "red";
+            currentRectangle.style.backgroundColor = "#ff595e";
             computerScore++;
             break;
         case "Human wins":
             if (roundCount !== roundNumber) resultU.textContent = "Human wins";
-            currentRectangle.style.backgroundColor = "green";
-            humanScore++
+            currentRectangle.style.backgroundColor = "#80dd6d";
+            humanScore++;
             break;
         case "Draw":
             if (roundCount !== roundNumber) resultU.textContent = "Draw";
-            currentRectangle.style.backgroundColor = "grey";
+            currentRectangle.style.backgroundColor = "#808080";
             break;
     };
     if (roundCount === roundNumber) {
@@ -153,6 +156,7 @@ function confirm () {
     } else {
         continueBtn.disabled = false;
     };
+    label.forEach(item => item.style.border = "2px solid #2c3e50");
 };
 
 function restart () {
@@ -171,16 +175,17 @@ function restart () {
     confirmBtn.disabled = true;
     continueBtn.disabled = true;
     restartBtn.disabled = true;
+    label.forEach(item => item.style.border = "2px solid #2c3e50");
     if (point.length !== 0) {
         point.forEach(item => {
             item.style.border = "2px solid black";
             item.style.backgroundColor = "transparent";
         });
-    }
+    };
     selections.forEach(item => {
         item.checked = false;
-    })
-}
+    });
+};
 
 startBtn.addEventListener("click", () => {
     pointField.textContent = "";
