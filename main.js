@@ -2,7 +2,7 @@ const startBtn = document.querySelector(".start-game");
 const confirmBtn = document.querySelector(".confirm-selection");
 const restartBtn = document.querySelector(".restart");
 const continueBtn = document.querySelector(".continue");
-const point = document.querySelectorAll(".rectangle");
+const pointField = document.querySelector(".rectangle-container");
 const currentRoundU = document.querySelector(".notification-update");
 const instructionU = document.querySelector(".instruction-update");
 const humanChoiceU = document.querySelector(".human-choice-update");
@@ -13,6 +13,8 @@ let roundCount = 0;
 let humanScore = 0;
 let computerScore = 0;
 let currentRectangle;
+let roundNumber = null;
+let point;
 //Just in case
 // const  = document.querySelector("");
 // const  = document.querySelector("");
@@ -87,7 +89,7 @@ function startNextRound () {
         instructionU.textContent = "Waiting for player's choice"; 
         currentRectangle = point[roundCount - 1];
         currentRectangle.style.border = "5px solid black";
-    } else if (0 < roundCount && roundCount < 5) {
+    } else if (0 < roundCount && roundCount < roundNumber) {
         //from second round
         currentRectangle.style.border = "2px solid black"; //Delete previous round cache
         roundCount++;
@@ -118,27 +120,30 @@ function confirm () {
     selections.forEach(item => item.disabled = true);
     switch (result) {
         case "Computer wins":
-            if (roundCount !== 5) resultU.textContent = "Computer wins";
+            if (roundCount !== roundNumber) resultU.textContent = "Computer wins";
             currentRectangle.style.backgroundColor = "red";
             computerScore++;
             break;
         case "Human wins":
-            if (roundCount !== 5) resultU.textContent = "Human wins";
+            if (roundCount !== roundNumber) resultU.textContent = "Human wins";
             currentRectangle.style.backgroundColor = "green";
             humanScore++
             break;
         case "Draw":
-            if (roundCount !== 5) resultU.textContent = "Draw";
+            if (roundCount !== roundNumber) resultU.textContent = "Draw";
             currentRectangle.style.backgroundColor = "grey";
             break;
     };
-    if (roundCount === 5) {
+    if (roundCount === roundNumber) {
         continueBtn.disabled = true;
         if (humanScore > computerScore) {
+            instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Human wins";
         } else if (humanScore < computerScore) {
+            instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Computer wins";
         } else {
+            instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Draw";
         };
     } else {
@@ -149,27 +154,49 @@ function confirm () {
 function restart () {
     humanScore = 0;
     computerScore = 0;
+    pointField.textContent = "";
     currentRoundU.textContent = "";
-    instructionU.textContent = "";
+    instructionU.textContent = "Click start game to play";
     humanChoiceU.textContent = "";
     computerChoiceU.textContent = "";
     resultU.textContent = "";
     roundCount = 0;
+    roundNumber = null;
     currentRectangle = null;
     startBtn.disabled = false;
     confirmBtn.disabled = true;
     continueBtn.disabled = true;
     restartBtn.disabled = true;
-    point.forEach(item => {
-        item.style.border = "2px solid black";
-        item.style.backgroundColor = "transparent";
-    });
+    if (point.length !== 0) {
+        point.forEach(item => {
+            item.style.border = "2px solid black";
+            item.style.backgroundColor = "transparent";
+        });
+    }
     selections.forEach(item => {
         item.checked = false;
     })
 }
 
-startBtn.addEventListener("click", startNextRound);
+startBtn.addEventListener("click", () => {
+    pointField.textContent = "";
+    while (!(1 <= roundNumber && roundNumber <= 15)) {
+        roundNumber = prompt("How many round do you want to play? (1 - 15) enter Stop to break");
+        if (roundNumber === "Stop") {
+            restart ();
+            break;
+        } else {
+            roundNumber = +roundNumber;
+            for (let i = 1; i <= roundNumber; i++) {
+                const createRectangle = document.createElement("div");
+                createRectangle.classList.add("rectangle");
+                pointField.appendChild(createRectangle);
+            };
+            point = document.querySelectorAll(".rectangle");
+            startNextRound ();
+        };
+    };
+});
 
 confirmBtn.addEventListener("click", confirm);
 
