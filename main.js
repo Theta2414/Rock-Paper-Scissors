@@ -32,7 +32,7 @@ selections.forEach(item => item.addEventListener("click", (event) => {
     confirmBtn.disabled = false;
     const humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
     label.forEach(item => {
-        item.style.border = "2px solid #2c3e50";
+        item.style.border = "2px solid #111820ff";
         humanChoiceLabel.style.border = "2px solid white";
     });
 }));
@@ -94,17 +94,18 @@ function startNextRound () {
         currentRoundU.textContent =  roundCount;
         instructionU.textContent = "Waiting for player's choice"; 
         currentRectangle = point[roundCount - 1];
-        currentRectangle.style.border = "5px solid black";
+        currentRectangle.style.border = "5px solid #111820ff";
     } else {
         //from second round
-        currentRectangle.style.border = "2px solid black"; //Delete previous round cache
+        currentRectangle.style.border = "2px solid #111820ff"; //Delete previous round cache
         roundCount++;
         currentRoundU.textContent =  roundCount;
         instructionU.textContent = "Waiting for player's choice";
         currentRectangle = point[roundCount - 1];
-        currentRectangle.style.border = "5px solid black"; //Highlight current round
+        currentRectangle.style.border = "5px solid #111820ff"; //Highlight current round
         humanChoiceU.textContent = "";
         computerChoiceU.textContent = "";
+        resultU.textContent = "";
     };
     startBtn.disabled = true;
     restartBtn.disabled = false;
@@ -142,7 +143,7 @@ function confirm () {
     };
     if (roundCount === roundNumber) {
         continueBtn.disabled = true;
-        point.forEach(item => item.style.border = "5px solid black");
+        point.forEach(item => item.style.border = "5px solid #111820ff");
         if (humanScore > computerScore) {
             instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Human wins";
@@ -178,7 +179,7 @@ function restart () {
     label.forEach(item => item.style.border = "2px solid #2c3e50");
     if (point.length !== 0) {
         point.forEach(item => {
-            item.style.border = "2px solid black";
+            item.style.border = "2px solid #677bab";
             item.style.backgroundColor = "transparent";
         });
     };
