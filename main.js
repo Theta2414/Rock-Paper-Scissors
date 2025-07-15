@@ -134,7 +134,7 @@ function confirm () {
         computerChoiceLabel.style.border = "3px solid #C65353";
     } else {
         computerChoiceLabel.style.border = "3px solid #901414";
-    }
+    };
     switch (result) {
         case "Computer wins":
             if (roundCount !== roundNumber) resultU.textContent = "Computer wins";
@@ -209,9 +209,9 @@ startBtn.addEventListener("click", () => {
     if (1 <= roundNumber && roundNumber <= 15) {
         roundNumber = +roundNumber;
         for (let i = 1; i <= roundNumber; i++) {
-            const createRectangle = document.createElement("div");
-            createRectangle.classList.add("rectangle");
-            pointField.appendChild(createRectangle);
+            const createdRectangle = document.createElement("div");
+            createdRectangle.classList.add("rectangle");
+            pointField.appendChild(createdRectangle);
         };
         point = document.querySelectorAll(".rectangle");
         startNextRound ();
