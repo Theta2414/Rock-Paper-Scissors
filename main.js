@@ -41,13 +41,13 @@ selections.forEach(item => item.addEventListener("click", (event) => {
 }));
 
 // Get a random choice: rock, paper or scissors for computer
-function getComputerChoice () {
+function getComputerChoice() {
     let randomNumber = Math.random();
     return (randomNumber < 1/3) ? "rock" : (randomNumber < 2/3) ? "paper" : "scissors"; 
 };
 
 //Return the result (win, draw, lose) of human's and computer's choice
-function checkResult (humanChoice, computerChoice) {
+function checkResult(humanChoice, computerChoice) {
     let result;
     if (humanChoice === "rock") {
         switch (computerChoice) {
@@ -90,7 +90,7 @@ function checkResult (humanChoice, computerChoice) {
 };
 
 // Start a new round and update UI to highlight the current round
-function startNextRound () {
+function startNextRound() {
     if (roundCount === 0) {      
         //the first ground
         roundCount++;
@@ -109,6 +109,8 @@ function startNextRound () {
         humanChoiceU.textContent = "";
         computerChoiceU.textContent = "";
         resultU.textContent = "";
+        humanChoiceLabel = null;
+        computerChoiceLabel = null;
     };
     startBtn.disabled = true;
     restartBtn.disabled = false;
@@ -121,7 +123,7 @@ function startNextRound () {
 };
 
 //Update labels base on human's choice and computer's choice
-function confirm () {
+function confirm() {
     const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
     const computerChoice = getComputerChoice ();
     computerChoiceU.textContent = computerChoice.at(0).toUpperCase() + computerChoice.slice(1);
@@ -169,7 +171,7 @@ function confirm () {
     };
 };
 
-function restart () {
+function restart() {
     humanScore = 0;
     computerScore = 0;
     pointField.textContent = "";
@@ -181,17 +183,14 @@ function restart () {
     roundCount = 0;
     roundNumber = null;
     currentRectangle = null;
+    humanChoiceLabel = null;
+    computerChoiceLabel = null;
+    point = null;
     startBtn.disabled = false;
     confirmBtn.disabled = true;
     continueBtn.disabled = true;
     restartBtn.disabled = true;
     label.forEach(item => item.removeAttribute("style"));
-    if (point.length !== 0) {
-        point.forEach(item => {
-            item.style.border = "2px solid #677bab";
-            item.style.backgroundColor = "transparent";
-        });
-    };
     selections.forEach(item => {
         item.checked = false;
         item.disabled = true;
@@ -214,7 +213,7 @@ startBtn.addEventListener("click", () => {
             pointField.appendChild(createdRectangle);
         };
         point = document.querySelectorAll(".rectangle");
-        startNextRound ();
+        startNextRound();
     } else {
         instructionU.textContent = "Click start game to play";
     };

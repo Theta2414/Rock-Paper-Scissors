@@ -130,3 +130,67 @@ label:hover {
     color: #bec9d4;
     cursor: default;
 }
+
+@media (max-width: 1200px) {
+    .round-teller {
+        min-width: 480px;
+    }
+}
+
+@media (max-width: 728px) {
+    .round-teller {
+        font-size: 12px;
+        min-width: 380px;
+    }
+    label {
+        font-size: 72px;
+    }
+    .control-btn {
+        height: fit-content;
+        width: fit-content;
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    label {
+        font-size: 56px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rectangle {
+        height: 20px;
+        width: 20px;
+    }
+    .round-teller {
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .control {
+        flex-wrap: wrap;
+        padding: 0 20px
+    }
+    .control-btn {
+        width: 108px;
+        flex: 1 1 108px;
+    }
+    label {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 400px) {
+    .round-teller {
+        min-width: auto;
+        width: 80%;
+    }
+}
+
+@media (max-width: 376px) {
+    label {
+        font-size: 36px;
+    }
+}
