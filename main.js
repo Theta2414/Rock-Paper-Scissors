@@ -16,6 +16,8 @@ let computerScore = 0;
 let currentRectangle = null;
 let roundNumber = null;
 let point = null;
+let humanChoiceLabel = null;
+let computerChoiceLabel = null;
 //Just in case
 // const  = document.querySelector("");
 // const  = document.querySelector("");
@@ -30,11 +32,11 @@ selections.forEach(item => item.addEventListener("click", (event) => {
     humanChoiceU.textContent = humanChoice.at(0).toUpperCase() + humanChoice.slice(1);
     instructionU.textContent = "Confirm your choice";
     confirmBtn.disabled = false;
-    const humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
+    humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
     label.forEach(item => {
         item.removeAttribute("style"); //Remove current style     
     });
-    humanChoiceLabel.style.border = "2px solid white"; //Add new style
+    humanChoiceLabel.style.border = "3px solid white"; //Add new style
     humanChoiceLabel.style.backgroundColor = "#1a2f43";
 }));
 
@@ -115,6 +117,7 @@ function startNextRound () {
         item.disabled = false;
         item.checked = false;
     });
+    label.forEach(item => item.removeAttribute("style"));
 };
 
 //Update labels base on human's choice and computer's choice
@@ -126,6 +129,12 @@ function confirm () {
     confirmBtn.disabled = true;
     selections.forEach(item => item.disabled = true);
     instructionU.textContent = "Click next ground";
+    computerChoiceLabel = document.querySelector(`label[for="${computerChoice}"]`);
+    if (humanChoiceLabel === computerChoiceLabel) {
+        computerChoiceLabel.style.border = "3px solid #C65353";
+    } else {
+        computerChoiceLabel.style.border = "3px solid #901414";
+    }
     switch (result) {
         case "Computer wins":
             if (roundCount !== roundNumber) resultU.textContent = "Computer wins";
@@ -158,7 +167,6 @@ function confirm () {
     } else {
         continueBtn.disabled = false;
     };
-    label.forEach(item => item.removeAttribute("style"));
 };
 
 function restart () {
