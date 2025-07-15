@@ -194,6 +194,7 @@ function restart () {
     };
     selections.forEach(item => {
         item.checked = false;
+        item.disabled = true;
     });
 };
 
