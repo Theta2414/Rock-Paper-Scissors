@@ -10,6 +10,10 @@ const computerChoiceU = document.querySelector(".computer-choice-update");
 const resultU = document.querySelector(".result-update");
 const selections = document.querySelectorAll(".radio");
 const label = document.querySelectorAll("label");
+const cardContainer = document.querySelector(".card-container");
+const announcement = document.createElement("p");
+const delHistoryBtn = document.querySelector(".del-history");
+announcement.textContent = "You have not played any matches.";
 let roundCount = 0;
 let humanScore = 0;
 let computerScore = 0;
@@ -18,6 +22,7 @@ let roundNumber = null;
 let point = null;
 let humanChoiceLabel = null;
 let computerChoiceLabel = null;
+let match = 0;
 //Just in case
 // const  = document.querySelector("");
 // const  = document.querySelector("");
@@ -172,16 +177,13 @@ function confirm() {
 };
 
 function restart() {
-    humanScore = 0;
-    computerScore = 0;
+    match++;
     pointField.textContent = "";
     currentRoundU.textContent = "";
     instructionU.textContent = "Click start game to play";
     humanChoiceU.textContent = "";
     computerChoiceU.textContent = "";
     resultU.textContent = "";
-    roundCount = 0;
-    roundNumber = null;
     currentRectangle = null;
     humanChoiceLabel = null;
     computerChoiceLabel = null;
@@ -195,6 +197,42 @@ function restart() {
         item.checked = false;
         item.disabled = true;
     });
+    if (roundNumber === roundCount) {
+        const card = document.createElement("li");
+        const header = document.createElement("h3");
+        const human = document.createElement("p");
+        const computer = document.createElement("p");
+        const overall = document.createElement("p");
+        header.textContent = `Match ${match}`;
+        human.textContent = `Human score: ${humanScore}`;
+        computer.textContent = `Computer score: ${computerScore}`;
+        if (humanScore > computerScore) overall.textContent = "Human wins";
+        if (humanScore < computerScore) overall.textContent = "Computer wins";
+        if (humanScore === computerScore) overall.textContent = "Draw";
+        card.classList.add("card");
+        card.appendChild(header);
+        card.appendChild(human);
+        card.appendChild(computer);
+        card.appendChild(overall);
+        cardContainer.appendChild(card);
+    };
+    roundCount = 0;
+    roundNumber = null;
+    humanScore = 0;
+    computerScore = 0;
+    noRecordAnnouncement();
+};
+
+function noRecordAnnouncement() {
+    if (cardContainer.children.length === 0) {
+        cardContainer.appendChild(announcement);
+    } else {
+        try {
+            cardContainer.removeChild(announcement);
+        } catch {
+
+        }
+    };
 };
 
 startBtn.addEventListener("click", () => {
@@ -224,3 +262,11 @@ confirmBtn.addEventListener("click", confirm);
 continueBtn.addEventListener("click", startNextRound);
 
 restartBtn.addEventListener("click", restart);
+
+delHistoryBtn.addEventListener("click", event => {
+    cardContainer.textContent = "";
+    cardContainer.appendChild(announcement);
+    match = 0;
+});
+
+noRecordAnnouncement();

@@ -13,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-height: 100vh;
 }
 
 h1 {
@@ -58,6 +59,7 @@ h1 {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    padding: 0 10px;
 }
 
 .selection {
@@ -136,6 +138,44 @@ label:hover {
     cursor: default;
 }
 
+/* .history {
+
+} */
+
+h2 {
+    color: white;
+}
+
+.header-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.card-container {
+    margin: 20px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    padding: 20px;
+    background-color: #2e3440;
+    border-radius: 20px;
+    max-width: 450px;
+    min-width: 200px;
+    line-height: 20px;
+    flex-grow: 1;
+}
+
+h3 {
+    line-height: 30px;
+}
+
 @media (max-width: 1200px) {
     .round-teller {
         min-width: 480px;
@@ -159,7 +199,7 @@ label:hover {
         height: fit-content;
         width: fit-content;
         padding: 10px 20px;
-        font-size: 12px;
+        font-size: 14px;
     } 
 }
 
@@ -185,10 +225,11 @@ label:hover {
     }
     .control-btn {
         width: 108px;
+        height: 45px;
         flex: 1 1 108px;
     }
     label {
-        font-size: 48px;
+        font-size: 56px;
     }
 }
 
@@ -196,9 +237,10 @@ label:hover {
     .round-teller {
         min-width: auto;
         width: 80%;
+        min-height: 190px;
     }
-    .round-teller {
-        height: 190px;
+    label {
+        font-size: 56px;
     }
 }
 
