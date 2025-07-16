@@ -231,7 +231,7 @@ function noRecordAnnouncement() {
             cardContainer.removeChild(announcement);
         } catch {
 
-        }
+        };
     };
 };
 
