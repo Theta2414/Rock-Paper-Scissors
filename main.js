@@ -200,6 +200,7 @@ function restart() {
         item.checked = false;
         item.disabled = true;
     });
+    //Final stage after clicked "confirmBtn"
     if (isFinished) {
         match++;
         const card = document.createElement("li");
@@ -232,17 +233,19 @@ function restart() {
         delBtn.addEventListener("click", event => {
             cardContainer.removeChild(card);
         });
+        toggleStateOfDelHistoryBtn();
+        noRecordAnnouncement();
     };
     roundCount = 0;
     roundNumber = null;
     humanScore = 0;
     computerScore = 0;
     isFinished = false;
-    noRecordAnnouncement();
 };
 
+//Announce if cardContainer does not have anything
 function noRecordAnnouncement() {
-    if (cardContainer.children.length === 0) {
+    if (cardContainer.children.length === 1 && announcement.isConnected || cardContainer.children.length === 0) {
         cardContainer.appendChild(announcement);
     } else {
         try {
@@ -250,6 +253,15 @@ function noRecordAnnouncement() {
         } catch {
 
         };
+    };
+};
+
+//Disable the delHistoryBtn if cardContainer does contain any data
+function toggleStateOfDelHistoryBtn() {
+    if (cardContainer.children.length === 0 || cardContainer.children.length === 1 && announcement.isConnected) {
+        delHistoryBtn.disabled = true;
+    } else {
+        delHistoryBtn.disabled = false;
     };
 };
 
@@ -283,8 +295,10 @@ restartBtn.addEventListener("click", restart);
 
 delHistoryBtn.addEventListener("click", event => {
     cardContainer.textContent = "";
-    cardContainer.appendChild(announcement);
+    noRecordAnnouncement();
+    toggleStateOfDelHistoryBtn();
     match = 0;
 });
 
 noRecordAnnouncement();
+toggleStateOfDelHistoryBtn();
