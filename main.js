@@ -177,7 +177,6 @@ function confirm() {
 };
 
 function restart() {
-    match++;
     pointField.textContent = "";
     currentRoundU.textContent = "";
     instructionU.textContent = "Click start game to play";
@@ -198,6 +197,7 @@ function restart() {
         item.disabled = true;
     });
     if (roundNumber === roundCount) {
+        match++;
         const card = document.createElement("li");
         const header = document.createElement("h3");
         const human = document.createElement("p");
