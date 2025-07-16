@@ -174,8 +174,20 @@ h2 {
     flex-grow: 1;
 }
 
+.card-header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 h3 {
     line-height: 30px;
+}
+
+.delBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
 }
 
 @media (max-width: 1200px) {

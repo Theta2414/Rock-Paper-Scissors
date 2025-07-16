@@ -18,6 +18,7 @@ let roundCount = 0;
 let humanScore = 0;
 let computerScore = 0;
 let currentRectangle = null;
+let isFinished = false;
 let roundNumber = null;
 let point = null;
 let humanChoiceLabel = null;
@@ -129,6 +130,9 @@ function startNextRound() {
 
 //Update labels base on human's choice and computer's choice
 function confirm() {
+    if (roundCount === roundNumber) {
+        isFinished = true;
+    };
     const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
     const computerChoice = getComputerChoice ();
     computerChoiceU.textContent = computerChoice.at(0).toUpperCase() + computerChoice.slice(1);
@@ -196,30 +200,44 @@ function restart() {
         item.checked = false;
         item.disabled = true;
     });
-    if (roundNumber === roundCount) {
+    if (isFinished) {
         match++;
         const card = document.createElement("li");
+        const headerContainer = document.createElement("div");
         const header = document.createElement("h3");
+        const delBtn = document.createElement("button");
+        const totalRound = document.createElement("div");
         const human = document.createElement("p");
         const computer = document.createElement("p");
         const overall = document.createElement("p");
         header.textContent = `Match ${match}`;
+        totalRound.textContent = `Total round(s): ${roundNumber}`;
         human.textContent = `Human score: ${humanScore}`;
         computer.textContent = `Computer score: ${computerScore}`;
-        if (humanScore > computerScore) overall.textContent = "Human wins";
-        if (humanScore < computerScore) overall.textContent = "Computer wins";
-        if (humanScore === computerScore) overall.textContent = "Draw";
+        delBtn.textContent = "X";
+        if (humanScore > computerScore) overall.textContent = "Result: Human wins";
+        if (humanScore < computerScore) overall.textContent = "Result: Computer wins";
+        if (humanScore === computerScore) overall.textContent = "Result: Draw";
         card.classList.add("card");
-        card.appendChild(header);
+        headerContainer.classList.add("card-header-container");
+        delBtn.classList.add("delBtn");
+        headerContainer.appendChild(header);
+        headerContainer.appendChild(delBtn);
+        card.appendChild(headerContainer);
+        card.appendChild(totalRound);
         card.appendChild(human);
         card.appendChild(computer);
         card.appendChild(overall);
         cardContainer.appendChild(card);
+        delBtn.addEventListener("click", event => {
+            cardContainer.removeChild(card);
+        });
     };
     roundCount = 0;
     roundNumber = null;
     humanScore = 0;
     computerScore = 0;
+    isFinished = false;
     noRecordAnnouncement();
 };
 
