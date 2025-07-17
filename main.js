@@ -1,18 +1,24 @@
 const startBtn = document.querySelector(".start-game");
+let isStartable = true;
 const confirmBtn = document.querySelector(".confirm-selection");
+let isConfirmable = false;
 const restartBtn = document.querySelector(".restart");
+let isRestart = false;
 const continueBtn = document.querySelector(".continue");
+let isContinued = false;
+const selections = document.querySelectorAll(".radio");
+let isRadioOn = false;
+const label = document.querySelectorAll("label");
 const pointField = document.querySelector(".rectangle-container");
 const currentRoundU = document.querySelector(".notification-update");
 const instructionU = document.querySelector(".instruction-update");
 const humanChoiceU = document.querySelector(".human-choice-update");
 const computerChoiceU = document.querySelector(".computer-choice-update");
 const resultU = document.querySelector(".result-update");
-const selections = document.querySelectorAll(".radio");
-const label = document.querySelectorAll("label");
 const cardContainer = document.querySelector(".card-container");
 const announcement = document.createElement("p");
 const delHistoryBtn = document.querySelector(".del-history");
+let isDeletable = false;
 announcement.textContent = "You have not played any matches.";
 let roundCount = 0;
 let humanScore = 0;
@@ -34,16 +40,22 @@ let match = 0;
 // const  = document.querySelector("");
 
 selections.forEach(item => item.addEventListener("click", (event) => {
-    const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
-    humanChoiceU.textContent = humanChoice.at(0).toUpperCase() + humanChoice.slice(1);
-    instructionU.textContent = "Confirm your choice";
-    confirmBtn.disabled = false;
-    humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
-    label.forEach(item => {
-        item.removeAttribute("style"); //Remove current style     
-    });
-    humanChoiceLabel.style.border = "3px solid white"; //Add new style
-    humanChoiceLabel.style.backgroundColor = "#1a2f43";
+    if (isRadioOn) {
+        const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
+        humanChoiceU.textContent = humanChoice.at(0).toUpperCase() + humanChoice.slice(1);
+        instructionU.textContent = "Confirm your choice";
+        confirmBtn.disabled = false;
+        isConfirmable = true;
+        humanChoiceLabel = document.querySelector(`label[for="${humanChoice}"]`);
+        label.forEach(item => {
+            item.removeAttribute("style"); //Remove current style     
+        });
+        humanChoiceLabel.style.border = "3px solid white"; //Add new style
+        humanChoiceLabel.style.backgroundColor = "#1a2f43";
+    } else {
+        selections.forEach(item => item.disabled = true);
+        isRadioOn = false;
+    };
 }));
 
 // Get a random choice: rock, paper or scissors for computer
@@ -119,12 +131,16 @@ function startNextRound() {
         computerChoiceLabel = null;
     };
     startBtn.disabled = true;
+    isStartable = false;
     restartBtn.disabled = false;
+    isRestart = true;
     continueBtn.disabled = true;
+    isContinued = false;
     selections.forEach(item => {
         item.disabled = false;
         item.checked = false;
     });
+    isRadioOn = true;;
     label.forEach(item => item.removeAttribute("style"));
 };
 
@@ -138,7 +154,9 @@ function confirm() {
     computerChoiceU.textContent = computerChoice.at(0).toUpperCase() + computerChoice.slice(1);
     const result = checkResult(humanChoice, computerChoice);
     confirmBtn.disabled = true;
+    isConfirmable = false;
     selections.forEach(item => item.disabled = true);
+    isRadioOn = false;
     instructionU.textContent = "Click next ground";
     computerChoiceLabel = document.querySelector(`label[for="${computerChoice}"]`);
     if (humanChoiceLabel === computerChoiceLabel) {
@@ -164,6 +182,7 @@ function confirm() {
     };
     if (roundCount === roundNumber) {
         continueBtn.disabled = true;
+        isContinued = false;
         point.forEach(item => item.style.border = "5px solid #111820ff");
         if (humanScore > computerScore) {
             instructionU.textContent = "Click restart to play the game again";
@@ -175,72 +194,77 @@ function confirm() {
             instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Draw";
         };
-    } else {
-        continueBtn.disabled = false;
     };
 };
 
 function restart() {
-    pointField.textContent = "";
-    currentRoundU.textContent = "";
-    instructionU.textContent = "Click start game to play";
-    humanChoiceU.textContent = "";
-    computerChoiceU.textContent = "";
-    resultU.textContent = "";
-    currentRectangle = null;
-    humanChoiceLabel = null;
-    computerChoiceLabel = null;
-    point = null;
-    startBtn.disabled = false;
-    confirmBtn.disabled = true;
-    continueBtn.disabled = true;
-    restartBtn.disabled = true;
-    label.forEach(item => item.removeAttribute("style"));
-    selections.forEach(item => {
-        item.checked = false;
-        item.disabled = true;
-    });
-    //Final stage after clicked "confirmBtn"
-    if (isFinished) {
-        match++;
-        const card = document.createElement("li");
-        const headerContainer = document.createElement("div");
-        const header = document.createElement("h3");
-        const delBtn = document.createElement("button");
-        const totalRound = document.createElement("div");
-        const human = document.createElement("p");
-        const computer = document.createElement("p");
-        const overall = document.createElement("p");
-        header.textContent = `Match ${match}`;
-        totalRound.textContent = `Total round(s): ${roundNumber}`;
-        human.textContent = `Human score: ${humanScore}`;
-        computer.textContent = `Computer score: ${computerScore}`;
-        delBtn.textContent = "X";
-        if (humanScore > computerScore) overall.textContent = "Result: Human wins";
-        if (humanScore < computerScore) overall.textContent = "Result: Computer wins";
-        if (humanScore === computerScore) overall.textContent = "Result: Draw";
-        card.classList.add("card");
-        headerContainer.classList.add("card-header-container");
-        delBtn.classList.add("delBtn");
-        headerContainer.appendChild(header);
-        headerContainer.appendChild(delBtn);
-        card.appendChild(headerContainer);
-        card.appendChild(totalRound);
-        card.appendChild(human);
-        card.appendChild(computer);
-        card.appendChild(overall);
-        cardContainer.appendChild(card);
-        delBtn.addEventListener("click", event => {
-            cardContainer.removeChild(card);
+    if (isRestart) {
+        pointField.textContent = "";
+        currentRoundU.textContent = "";
+        instructionU.textContent = "Click start game to play";
+        humanChoiceU.textContent = "";
+        computerChoiceU.textContent = "";
+        resultU.textContent = "";
+        currentRectangle = null;
+        humanChoiceLabel = null;
+        computerChoiceLabel = null;
+        point = null;
+        startBtn.disabled = false;
+        isStartable = true;
+        confirmBtn.disabled = true;
+        isConfirmable = false;
+        continueBtn.disabled = true;
+        isContinued = false;
+        restartBtn.disabled = true;
+        isRestart = false;
+        label.forEach(item => item.removeAttribute("style"));
+        selections.forEach(item => {
+            item.checked = false;
+            item.disabled = true;
         });
-        toggleStateOfDelHistoryBtn();
-        noRecordAnnouncement();
+        isRadioOn = false;
+        //Final stage after clicked "confirmBtn"
+        if (isFinished) {
+            match++;
+            const card = document.createElement("li");
+            const headerContainer = document.createElement("div");
+            const header = document.createElement("h3");
+            const delBtn = document.createElement("button");
+            const totalRound = document.createElement("div");
+            const human = document.createElement("p");
+            const computer = document.createElement("p");
+            const overall = document.createElement("p");
+            header.textContent = `Match ${match}`;
+            totalRound.textContent = `Total round(s): ${roundNumber}`;
+            human.textContent = `Human score: ${humanScore}`;
+            computer.textContent = `Computer score: ${computerScore}`;
+            delBtn.textContent = "X";
+            if (humanScore > computerScore) overall.textContent = "Result: Human wins";
+            if (humanScore < computerScore) overall.textContent = "Result: Computer wins";
+            if (humanScore === computerScore) overall.textContent = "Result: Draw";
+            card.classList.add("card");
+            headerContainer.classList.add("card-header-container");
+            delBtn.classList.add("delBtn");
+            headerContainer.appendChild(header);
+            headerContainer.appendChild(delBtn);
+            card.appendChild(headerContainer);
+            card.appendChild(totalRound);
+            card.appendChild(human);
+            card.appendChild(computer);
+            card.appendChild(overall);
+            cardContainer.appendChild(card);
+            delBtn.addEventListener("click", event => {
+                cardContainer.removeChild(card);
+            });
+            toggleStateOfDelHistoryBtn();
+            noRecordAnnouncement();
+        };
+        roundCount = 0;
+        roundNumber = null;
+        humanScore = 0;
+        computerScore = 0;
+        isFinished = false;
     };
-    roundCount = 0;
-    roundNumber = null;
-    humanScore = 0;
-    computerScore = 0;
-    isFinished = false;
 };
 
 //Announce if cardContainer does not have anything
@@ -260,44 +284,72 @@ function noRecordAnnouncement() {
 function toggleStateOfDelHistoryBtn() {
     if (cardContainer.children.length === 0 || cardContainer.children.length === 1 && announcement.isConnected) {
         delHistoryBtn.disabled = true;
+        isDeletable = false;
     } else {
         delHistoryBtn.disabled = false;
+        isDeletable = true;
     };
 };
 
 startBtn.addEventListener("click", () => {
-    pointField.textContent = "";
-    while (!(1 <= roundNumber && roundNumber <= 15)) {
-        roundNumber = prompt("How many rounds do you want to play? (1 - 15) enter 'stop' to cancel");
-        if (roundNumber === "stop") {
-            break;
+    if (isStartable) {
+        pointField.textContent = "";
+        while (!(1 <= roundNumber && roundNumber <= 15)) {
+            roundNumber = prompt("How many rounds do you want to play? (1 - 15) enter 'stop' to cancel");
+            if (roundNumber === "stop") {
+                break;
+            };
         };
-    };
-    if (1 <= roundNumber && roundNumber <= 15) {
-        roundNumber = +roundNumber;
-        for (let i = 1; i <= roundNumber; i++) {
-            const createdRectangle = document.createElement("div");
-            createdRectangle.classList.add("rectangle");
-            pointField.appendChild(createdRectangle);
+        if (1 <= roundNumber && roundNumber <= 15) {
+            roundNumber = +roundNumber;
+            for (let i = 1; i <= roundNumber; i++) {
+                const createdRectangle = document.createElement("div");
+                createdRectangle.classList.add("rectangle");
+                pointField.appendChild(createdRectangle);
+            };
+            point = document.querySelectorAll(".rectangle");
+            startNextRound();
+        } else {
+            instructionU.textContent = "Click start game to play";
         };
-        point = document.querySelectorAll(".rectangle");
-        startNextRound();
     } else {
-        instructionU.textContent = "Click start game to play";
+        startBtn.disabled = true;
     };
 });
 
-confirmBtn.addEventListener("click", confirm);
+confirmBtn.addEventListener("click", (event) => {
+    if (isConfirmable) {
+        confirm();
+    } else {
+        confirmBtn.disabled = true;
+    };
+});
 
-continueBtn.addEventListener("click", startNextRound);
+continueBtn.addEventListener("click", (event) => {
+    if (isContinued) {
+        startNextRound();
+    } else {
+        continueBtn.disabled = true;
+    };
+});
 
-restartBtn.addEventListener("click", restart);
+restartBtn.addEventListener("click", (event) => {
+    if (isRestart) {
+        restart();
+    } else {
+        restartBtn.disabled = true;
+    };
+});
 
 delHistoryBtn.addEventListener("click", event => {
-    cardContainer.textContent = "";
-    noRecordAnnouncement();
-    toggleStateOfDelHistoryBtn();
-    match = 0;
+    if (isDeletable) { 
+        cardContainer.textContent = "";
+        noRecordAnnouncement();
+        toggleStateOfDelHistoryBtn();
+        match = 0;
+    } else {
+        delHistoryBtn.disabled = true;
+    };
 });
 
 noRecordAnnouncement();
