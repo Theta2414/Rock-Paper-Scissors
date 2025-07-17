@@ -197,7 +197,7 @@ function confirm() {
     } else {
         continueBtn.disabled = false;
         isContinued = true;
-    }
+    };
 };
 
 function restart() {
