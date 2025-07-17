@@ -194,7 +194,10 @@ function confirm() {
             instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Draw";
         };
-    };
+    } else {
+        continueBtn.disabled = false;
+        isContinued = true;
+    }
 };
 
 function restart() {
