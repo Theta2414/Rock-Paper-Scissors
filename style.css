@@ -94,12 +94,7 @@ label:hover {
     display: none;
 }
 
-.radio:disabled ~ label {
-    cursor: no-drop;
-}
-
 .radio:disabled ~ label:hover {
-    cursor: no-drop;
     background-color: #2c3e50;
     border: 3px solid #2c3e50;
 }
@@ -137,6 +132,9 @@ label:hover {
 .control-btn:disabled {
     background-color: #9eafbf;
     color: #bec9d4;
+}
+
+.control-btn:disabled, .radio:disabled ~ label {
     cursor: no-drop;
 }
 
