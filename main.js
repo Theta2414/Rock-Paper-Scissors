@@ -157,7 +157,7 @@ function confirm() {
     isConfirmable = false;
     selections.forEach(item => item.disabled = true);
     isRadioOn = false;
-    instructionU.textContent = "Click next ground";
+    instructionU.textContent = "Click next round";
     computerChoiceLabel = document.querySelector(`label[for="${computerChoice}"]`);
     if (humanChoiceLabel === computerChoiceLabel) {
         computerChoiceLabel.style.border = "3px solid #C65353";
