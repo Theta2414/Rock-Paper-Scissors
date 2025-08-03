@@ -55,14 +55,14 @@ selections.forEach(item => item.addEventListener("click", (event) => {
     } else {
         selections.forEach(item => item.disabled = true);
         isRadioOn = false;
-    };
+    }
 }));
 
 // Get a random choice: rock, paper or scissors for computer
 function getComputerChoice() {
     let randomNumber = Math.random();
     return (randomNumber < 1/3) ? "rock" : (randomNumber < 2/3) ? "paper" : "scissors"; 
-};
+}
 
 //Return the result (win, draw, lose) of human's and computer's choice
 function checkResult(humanChoice, computerChoice) {
@@ -78,7 +78,7 @@ function checkResult(humanChoice, computerChoice) {
             case "scissors":
                 result = "Human wins";
                 break;
-        };
+        }
     } else if (humanChoice === "paper") {
         switch (computerChoice) {
             case "rock":
@@ -90,7 +90,7 @@ function checkResult(humanChoice, computerChoice) {
             case "scissors":
                 result = "Computer wins";
                 break;
-        };
+        }
     } else {
         switch (computerChoice) {
             case "rock":
@@ -102,10 +102,10 @@ function checkResult(humanChoice, computerChoice) {
             case "scissors":
                 result = "Draw";
                 break;
-        };
-    };
+        }
+    }
     return result;
-};
+}
 
 // Start a new round and update UI to highlight the current round
 function startNextRound() {
@@ -129,7 +129,7 @@ function startNextRound() {
         resultU.textContent = "";
         humanChoiceLabel = null;
         computerChoiceLabel = null;
-    };
+    }
     startBtn.disabled = true;
     isStartable = false;
     restartBtn.disabled = false;
@@ -142,13 +142,13 @@ function startNextRound() {
     });
     isRadioOn = true;;
     label.forEach(item => item.removeAttribute("style"));
-};
+}
 
 //Update labels base on human's choice and computer's choice
 function confirm() {
     if (roundCount === roundNumber) {
         isFinished = true;
-    };
+    }
     const humanChoice = document.querySelector('input[name="selection-radio"]:checked')?.value;
     const computerChoice = getComputerChoice ();
     computerChoiceU.textContent = computerChoice.at(0).toUpperCase() + computerChoice.slice(1);
@@ -163,7 +163,7 @@ function confirm() {
         computerChoiceLabel.style.border = "3px solid #C65353";
     } else {
         computerChoiceLabel.style.border = "3px solid #901414";
-    };
+    }
     switch (result) {
         case "Computer wins":
             if (roundCount !== roundNumber) resultU.textContent = "Computer wins";
@@ -179,7 +179,7 @@ function confirm() {
             if (roundCount !== roundNumber) resultU.textContent = "Draw";
             currentRectangle.style.backgroundColor = "#808080";
             break;
-    };
+    }
     if (roundCount === roundNumber) {
         continueBtn.disabled = true;
         isContinued = false;
@@ -193,12 +193,12 @@ function confirm() {
         } else {
             instructionU.textContent = "Click restart to play the game again";
             resultU.textContent = "The match is over. Overall result: Draw";
-        };
+        }
     } else {
         continueBtn.disabled = false;
         isContinued = true;
-    };
-};
+    }
+}
 
 function restart() {
     if (isRestart) {
@@ -261,14 +261,14 @@ function restart() {
             });
             toggleStateOfDelHistoryBtn();
             noRecordAnnouncement();
-        };
+        }
         roundCount = 0;
         roundNumber = null;
         humanScore = 0;
         computerScore = 0;
         isFinished = false;
-    };
-};
+    }
+}
 
 //Announce if cardContainer does not have anything
 function noRecordAnnouncement() {
@@ -279,9 +279,9 @@ function noRecordAnnouncement() {
             cardContainer.removeChild(announcement);
         } catch {
 
-        };
-    };
-};
+        }
+    }
+}
 
 //Disable the delHistoryBtn if cardContainer does contain any data
 function toggleStateOfDelHistoryBtn() {
@@ -291,8 +291,8 @@ function toggleStateOfDelHistoryBtn() {
     } else {
         delHistoryBtn.disabled = false;
         isDeletable = true;
-    };
-};
+    }
+}
 
 startBtn.addEventListener("click", () => {
     if (isStartable) {
@@ -301,8 +301,8 @@ startBtn.addEventListener("click", () => {
             roundNumber = prompt("How many rounds do you want to play? (1 - 15) enter 'stop' to cancel");
             if (roundNumber === "stop") {
                 break;
-            };
-        };
+            }
+        }
         if (1 <= roundNumber && roundNumber <= 15) {
             roundNumber = +roundNumber;
             for (let i = 1; i <= roundNumber; i++) {
@@ -314,18 +314,18 @@ startBtn.addEventListener("click", () => {
             startNextRound();
         } else {
             instructionU.textContent = "Click start game to play";
-        };
+        }
     } else {
         startBtn.disabled = true;
-    };
-});
+    }
+})
 
 confirmBtn.addEventListener("click", (event) => {
     if (isConfirmable) {
         confirm();
     } else {
         confirmBtn.disabled = true;
-    };
+    }
 });
 
 continueBtn.addEventListener("click", (event) => {
@@ -333,7 +333,7 @@ continueBtn.addEventListener("click", (event) => {
         startNextRound();
     } else {
         continueBtn.disabled = true;
-    };
+    }
 });
 
 restartBtn.addEventListener("click", (event) => {
@@ -341,7 +341,7 @@ restartBtn.addEventListener("click", (event) => {
         restart();
     } else {
         restartBtn.disabled = true;
-    };
+    }
 });
 
 delHistoryBtn.addEventListener("click", event => {
@@ -352,7 +352,7 @@ delHistoryBtn.addEventListener("click", event => {
         match = 0;
     } else {
         delHistoryBtn.disabled = true;
-    };
+    }
 });
 
 noRecordAnnouncement();

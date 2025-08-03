@@ -134,7 +134,7 @@ label:hover {
     color: #bec9d4;
 }
 
-.control-btn:disabled, .radio:disabled ~ label {
+button:disabled, input:disabled ~ label {
     cursor: no-drop;
 }
 
