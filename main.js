@@ -256,8 +256,12 @@ function restart() {
             card.appendChild(computer);
             card.appendChild(overall);
             cardContainer.appendChild(card);
-            delBtn.addEventListener("click", event => {
+            delBtn.addEventListener("click", () => {
+                for (idx = Array.from(cardContainer.childNodes).indexOf(card) + 1; idx < cardContainer.childNodes.length; idx++) {
+                    cardContainer.childNodes[idx].firstElementChild.firstElementChild.textContent = `Match ${idx - 1}`;
+                }
                 cardContainer.removeChild(card);
+                match--;
             });
             toggleStateOfDelHistoryBtn();
             noRecordAnnouncement();
@@ -320,7 +324,7 @@ startBtn.addEventListener("click", () => {
     }
 })
 
-confirmBtn.addEventListener("click", (event) => {
+confirmBtn.addEventListener("click", () => {
     if (isConfirmable) {
         confirm();
     } else {
@@ -328,7 +332,7 @@ confirmBtn.addEventListener("click", (event) => {
     }
 });
 
-continueBtn.addEventListener("click", (event) => {
+continueBtn.addEventListener("click", () => {
     if (isContinued) {
         startNextRound();
     } else {
@@ -336,7 +340,7 @@ continueBtn.addEventListener("click", (event) => {
     }
 });
 
-restartBtn.addEventListener("click", (event) => {
+restartBtn.addEventListener("click", () => {
     if (isRestart) {
         restart();
     } else {
@@ -344,7 +348,7 @@ restartBtn.addEventListener("click", (event) => {
     }
 });
 
-delHistoryBtn.addEventListener("click", event => {
+delHistoryBtn.addEventListener("click", () => {
     if (isDeletable) { 
         cardContainer.textContent = "";
         noRecordAnnouncement();
@@ -353,6 +357,7 @@ delHistoryBtn.addEventListener("click", event => {
     } else {
         delHistoryBtn.disabled = true;
     }
+    historyCardList.splice(0, historyCardList.length);
 });
 
 noRecordAnnouncement();
