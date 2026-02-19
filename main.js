@@ -258,7 +258,7 @@ function restart() {
             card.index = (match === 1) ? 0 : cardContainer.children.length;
             cardContainer.appendChild(card);
             delBtn.addEventListener("click", () => {
-                for (idx = card.index + 1; idx < cardContainer.children.length; idx++) {
+                for (let idx = card.index + 1; idx < cardContainer.children.length; idx++) {
                     cardContainer.children[idx].firstElementChild.firstElementChild.textContent = `Match ${idx}`;
                     --cardContainer.children[idx].index;
                 }
