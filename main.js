@@ -264,6 +264,7 @@ function restart() {
                 }
                 cardContainer.removeChild(card);
                 match--;
+                noRecordAnnouncement();
             });
             toggleStateOfDelHistoryBtn();
             noRecordAnnouncement();
@@ -284,7 +285,7 @@ function noRecordAnnouncement() {
         try {
             cardContainer.removeChild(announcement);
         } catch {
-
+            console.error("Can not remove Notification text in History")
         }
     }
 }
