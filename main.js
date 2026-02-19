@@ -285,7 +285,7 @@ function noRecordAnnouncement() {
         try {
             cardContainer.removeChild(announcement);
         } catch {
-            console.error("Can not remove Notification text in History")
+        
         }
     }
 }
